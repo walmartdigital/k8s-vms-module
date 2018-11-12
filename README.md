@@ -13,6 +13,7 @@ module "k8s" {
   images_resource_group = "my-images-resource-group"
   root_domain = "my-root-domain"
   root_domain_resource_group = "my-root-domain-resource-group"
+  environment = "staging"
   k8s_image_name = "k8s-v1.0.0"
   bastion_image_name = "bastion-v1.0.0"
   ssh_public_key = "abc123"
@@ -27,6 +28,7 @@ module "k8s" {
 * **images_resource_group**: Resource group where to find the custom images (type: string, required).
 * **root_domain**: Domain where to write DNS records (type: string, required).
 * **root_domain_resource_group**: Resource group where to find the root domain dns zone (type: string, required).
+* **environment**: The environment where to deploy (type: string, required).
 * **k8s_image_name**: Custom K8s image name (type: string, required).
 * **bastion_image_name**: Custom bastion image name (type: string, required).
 * **ssh_public_key**: The public ssh key for connect to bastion (type: string, required).
