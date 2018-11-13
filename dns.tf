@@ -21,7 +21,7 @@ resource "azurerm_dns_ns_record" "subdomain" {
 }
 
 resource "azurerm_dns_a_record" "bastion" {
-  name                = "bastion"
+  name                = "bastion-${var.cluster_name}"
   zone_name           = "${azurerm_dns_zone.subdomain.name}"
   resource_group_name = "${data.azurerm_resource_group.main.name}"
   ttl                 = 1
