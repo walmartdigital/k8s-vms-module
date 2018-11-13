@@ -18,7 +18,6 @@ resource "azurerm_network_security_rule" "services" {
   network_security_group_name = "${azurerm_network_security_group.workers.name}"
 }
 
-
 resource "azurerm_network_interface" "worker" {
   count                     = "${var.worker_count}"
   name                      = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
