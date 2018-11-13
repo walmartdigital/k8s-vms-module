@@ -71,6 +71,7 @@ resource "azurerm_virtual_machine" "worker" {
 
   tags = "${merge(var.default_tags, map(
     "environmentinfo", "T:Prod; N:${var.cluster_name}-${var.environment}-${random_string.id.result}",
+    "cluster", "${var.cluster_name}-${var.environment}",
     "role", "worker"
     ))}"
 }
