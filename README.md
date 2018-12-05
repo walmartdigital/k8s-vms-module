@@ -38,5 +38,4 @@ module "k8s" {
 
 * **worker_ips**: The private IPs of the created worker VMs.
 * **manager_ips**: The private IPs of the created manager VMs.
-* **etcd_ips**: The private IPs of the created etcd VMs.
 * **dns_zone_name**: Zone name generated.
