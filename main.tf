@@ -1,5 +1,5 @@
 resource "azurerm_availability_set" "nodes" {
-  name                        = "${var.cluster_name}-${var.environment}-${random_string.id.result}-nodes"
+  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-nodes"
   location                    = "${data.azurerm_resource_group.main.location}"
   resource_group_name         = "${data.azurerm_resource_group.main.name}"
   managed                     = true
@@ -24,12 +24,4 @@ data "azurerm_image" "k8s" {
 data "azurerm_image" "bastion" {
   name                = "${var.bastion_image_name}"
   resource_group_name = "${var.images_resource_group}"
-}
-
-resource "random_string" "id" {
-  length  = 6
-  lower   = true
-  upper   = false
-  number  = false
-  special = false
 }

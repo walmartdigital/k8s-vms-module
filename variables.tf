@@ -1,3 +1,7 @@
+variable "name_suffix" {
+  type = "string"
+}
+
 variable "cluster_name" {
   type    = "string"
   default = "kubernetes"
@@ -13,14 +17,6 @@ variable "main_resource_group" {
 }
 
 variable "images_resource_group" {
-  type = "string"
-}
-
-variable "root_domain" {
-  type = "string"
-}
-
-variable "root_domain_resource_group" {
   type = "string"
 }
 
@@ -40,9 +36,9 @@ variable "default_tags" {
   type = "map"
 
   default = {
-    applicationname      = "k8s"
-    deploymenttype       = "Terraform"
-    platform             = "Kubernetes"
+    applicationname = "k8s"
+    deploymenttype  = "Terraform"
+    platform        = "Kubernetes"
   }
 }
 

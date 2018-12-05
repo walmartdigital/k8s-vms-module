@@ -1,11 +1,11 @@
 resource "azurerm_network_security_group" "workers" {
-  name                = "${var.cluster_name}-${var.environment}-${random_string.id.result}-worker"
+  name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-worker"
   location            = "${data.azurerm_resource_group.main.location}"
   resource_group_name = "${data.azurerm_resource_group.main.name}"
 }
 
 resource "azurerm_network_security_rule" "services" {
-  name                        = "${var.cluster_name}-${var.environment}-${random_string.id.result}-services"
+  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-services"
   priority                    = 150
   direction                   = "Inbound"
   access                      = "Allow"
@@ -20,13 +20,13 @@ resource "azurerm_network_security_rule" "services" {
 
 resource "azurerm_network_interface" "worker" {
   count                     = "${var.worker_count}"
-  name                      = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
+  name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   location                  = "${data.azurerm_resource_group.main.location}"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
   network_security_group_id = "${azurerm_network_security_group.workers.id}"
 
   ip_configuration {
-    name                          = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
+    name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
     subnet_id                     = "${data.azurerm_subnet.subnet.id}"
     private_ip_address_allocation = "dynamic"
   }
@@ -34,7 +34,7 @@ resource "azurerm_network_interface" "worker" {
 
 resource "azurerm_virtual_machine" "worker" {
   count                            = "${var.worker_count}"
-  name                             = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
+  name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   location                         = "${data.azurerm_resource_group.main.location}"
   availability_set_id              = "${azurerm_availability_set.nodes.id}"
   resource_group_name              = "${data.azurerm_resource_group.main.name}"
@@ -48,14 +48,14 @@ resource "azurerm_virtual_machine" "worker" {
   }
 
   storage_os_disk {
-    name              = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
+    name              = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "${var.cluster_name}-${var.environment}-${random_string.id.result}-${format("worker%d", count.index + 1)}"
+    computer_name  = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
     admin_username = "ubuntu"
     admin_password = "ef208a6b-a6b0-47f0-be8f-2d2bd2e640ba"
   }
@@ -70,7 +70,7 @@ resource "azurerm_virtual_machine" "worker" {
   }
 
   tags = "${merge(var.default_tags, map(
-    "environmentinfo", "T:Prod; N:${var.cluster_name}-${var.environment}-${random_string.id.result}",
+    "environmentinfo", "T:Prod; N:${var.cluster_name}-${var.environment}-${var.name_suffix}",
     "cluster", "${var.cluster_name}-${var.environment}",
     "role", "worker"
     ))}"
