@@ -7,7 +7,7 @@ rke (Rancher Kubernetes Engine).
 
 ```bash
 module "k8s" {
-  source = "https://github.com/walmartdigital/k8s-azure-module.git?ref=1.0.0"
+  source = "https://github.com/walmartdigital/k8s-azure-module.git?ref=0.0.1"
 
   main_resource_group = "my-resource-group"
   images_resource_group = "my-images-resource-group"
