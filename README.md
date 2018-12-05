@@ -36,5 +36,6 @@ module "k8s" {
 
 ## Outputs
 
+* **bastion_ip**: The bastion public IP address.
 * **worker_ips**: The private IPs of the created worker VMs.
 * **manager_ips**: The private IPs of the created manager VMs.
