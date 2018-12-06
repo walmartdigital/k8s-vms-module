@@ -46,3 +46,7 @@ variable "worker_count" {
   type    = "string"
   default = "3"
 }
+
+variable "lb_address_pool_id" {
+  type = "string"
+}

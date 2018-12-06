@@ -33,6 +33,7 @@ module "k8s" {
 * **ssh_public_key**: The public ssh key for connect to bastion (type: string, required).
 * **default_tags**: Tags assigned to every resource that support it (type: map).
 * **worker_count**: Number of workers (type: string, default: 3).
+* **lb_address_pool_id**: Load balancer address pool id (type: string, default: 3).
 
 ## Outputs
 
