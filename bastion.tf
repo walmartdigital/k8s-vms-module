@@ -12,7 +12,7 @@ resource "azurerm_network_security_group" "bastion" {
 }
 
 resource "azurerm_network_security_rule" "ssh" {
-  name                        = "${var.cluster_name}-ssh-bastion"
+  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-ssh-bastion"
   priority                    = 150
   direction                   = "Inbound"
   access                      = "Allow"
