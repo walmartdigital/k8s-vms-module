@@ -20,6 +20,14 @@ variable "images_resource_group" {
   type = "string"
 }
 
+variable "vnet_name" {
+  type = "string"
+}
+
+variable "subnet_name" {
+  type = "string"
+}
+
 variable "k8s_image_name" {
   type = "string"
 }

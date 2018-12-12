@@ -11,8 +11,8 @@ data "azurerm_resource_group" "main" {
 }
 
 data "azurerm_subnet" "subnet" {
-  name                 = "cl-${var.environment}-primary"
-  virtual_network_name = "cl-${var.environment}"
+  name                 = "${var.subnet_name}"
+  virtual_network_name = "${var.vnet_name}"
   resource_group_name  = "${data.azurerm_resource_group.main.name}"
 }
 
