@@ -6,11 +6,16 @@ resource "azurerm_network_interface" "worker" {
   network_security_group_id = "${var.network_security_group_id}"
 
   ip_configuration {
-    name                                    = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
-    subnet_id                               = "${data.azurerm_subnet.subnet.id}"
-    private_ip_address_allocation           = "dynamic"
-    load_balancer_backend_address_pools_ids = ["${var.lb_address_pool_id}"]
+    name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+    subnet_id                     = "${data.azurerm_subnet.subnet.id}"
+    private_ip_address_allocation = "dynamic"
   }
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "worker" {
+  network_interface_id    = "${azurerm_network_interface.worker.id}"
+  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+  backend_address_pool_id = "${var.lb_address_pool_id}"
 }
 
 resource "azurerm_virtual_machine" "worker" {
