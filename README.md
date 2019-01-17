@@ -15,11 +15,12 @@ module "k8s" {
   main_resource_group = "my-resource-group"
   vnet_name = "my-vnet-name"
   subnet_name = "my-subnet-name"
+  images_resource_group = "my-images-resource-group"
   k8s_image_name = "k8s-v1.0.0"
   bastion_image_name = "bastion-v1.0.0"
-  images_resource_group = "my-images-resource-group"
   ssh_public_key = "abc123"
   worker_count = "2"
+  network_security_group_id = "network-security-group-id"
   lb_address_pool_id = "loadbalancer-address-pool-id"
 }
 ```
@@ -32,7 +33,6 @@ module "k8s" {
 * **main_resource_group**: Resource group where all resources will be provisioned (type: string, required).
 * **vnet_name**: Main resource group virtual network (type: string, required).
 * **subnet_name**: Subnet associated to virtual network (type: string, required).
-* **k8s_image_name**: Custom K8s image name (type: string, required).
 * **images_resource_group**: Resource group where to find the custom images (type: string, required).
 * **k8s_image_name**: Custom k8s image name (type: string, required).
 * **bastion_image_name**: Custom bastion image name (type: string, required).
