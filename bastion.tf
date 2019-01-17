@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "bastion" {
   name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
   location            = "${data.azurerm_resource_group.main.location}"
   resource_group_name = "${data.azurerm_resource_group.main.name}"
-  allocation_method   = "static"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_security_group" "bastion" {
