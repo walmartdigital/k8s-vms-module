@@ -13,7 +13,8 @@ resource "azurerm_network_interface" "worker" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "worker" {
-  network_interface_id    = "${azurerm_network_interface.worker.id}"
+  count                   = "${var.worker_count}"
+  network_interface_id    = "${element(azurerm_network_interface.worker.*.id, count.index)}"
   ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   backend_address_pool_id = "${var.lb_address_pool_id}"
 }
