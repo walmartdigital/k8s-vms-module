@@ -58,3 +58,7 @@ variable "worker_count" {
 variable "lb_address_pool_id" {
   type = "string"
 }
+
+variable "network_security_group_id" {
+  type = "string"
+}

@@ -1,29 +1,9 @@
-resource "azurerm_network_security_group" "workers" {
-  name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-worker"
-  location            = "${data.azurerm_resource_group.main.location}"
-  resource_group_name = "${data.azurerm_resource_group.main.name}"
-}
-
-resource "azurerm_network_security_rule" "services" {
-  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-services"
-  priority                    = 150
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "30000-32767"
-  source_address_prefix       = "Internet"
-  destination_address_prefix  = "VirtualNetwork"
-  resource_group_name         = "${data.azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.workers.name}"
-}
-
 resource "azurerm_network_interface" "worker" {
   count                     = "${var.worker_count}"
   name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   location                  = "${data.azurerm_resource_group.main.location}"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
-  network_security_group_id = "${azurerm_network_security_group.workers.id}"
+  network_security_group_id = "${var.network_security_group_id}"
 
   ip_configuration {
     name                                    = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
