@@ -6,7 +6,7 @@ rke (Rancher Kubernetes Engine).
 ## Usage
 
 ```bash
-module "k8s" {
+module "az_vms" {
   source = "https://github.com/walmartdigital/k8s-azure-module.git?ref=0.0.1"
 
   name_suffix = "abc123"
