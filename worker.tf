@@ -4,6 +4,7 @@ resource "azurerm_network_interface" "worker" {
   location                  = "${data.azurerm_resource_group.main.location}"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
   network_security_group_id = "${var.network_security_group_id}"
+  enable_ip_forwarding      = true
 
   ip_configuration {
     name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
