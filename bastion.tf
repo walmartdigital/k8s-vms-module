@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine" "bastion" {
   }
 
   os_profile {
-    computer_name  = "${var.cluster_name}-${var.environment}-bastion"
+    computer_name  = "${var.cluster_name}-${var.environment}-${data.azurerm_resource_group.main.location}"
     admin_username = "ubuntu"
     admin_password = "ef208a6b-a6b0-47f0-be8f-2d2bd2e640ba"
   }
