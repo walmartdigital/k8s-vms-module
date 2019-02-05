@@ -14,6 +14,7 @@ resource "azurerm_network_security_group" "bastion" {
 }
 
 resource "azurerm_network_security_rule" "ssh" {
+  count                       = "${var.add_bastion == "yes" ? "1" : "0"}"
   name                        = "ssh"
   priority                    = 150
   direction                   = "Inbound"
