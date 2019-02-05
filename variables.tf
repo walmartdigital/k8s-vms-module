@@ -62,3 +62,8 @@ variable "lb_address_pool_id" {
 variable "network_security_group_id" {
   type = "string"
 }
+
+variable "add_bastion" {
+  type    = "string"
+  default = "yes"
+}
