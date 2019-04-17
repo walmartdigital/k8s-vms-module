@@ -7,7 +7,7 @@ RKE (Rancher Kubernetes Engine).
 
 ```bash
 module "az_vms" {
-  source = "git::https://github.com/walmartdigital/k8s-azure-module.git?ref=0.1.0"
+  source = "git::https://github.com/walmartdigital/k8s-vms-module.git?ref=0.1.0"
 
   name_suffix               = "abc123"
   cluster_name              = "my-cluster"
@@ -47,3 +47,5 @@ module "az_vms" {
 * **bastion_ip**: The bastion public IP address.
 * **worker_ips**: The private IPs of the created worker VMs.
 * **manager_ips**: The private IPs of the created manager VMs.
+
+> You can use our [k8s-lb-module](https://github.com/walmartdigital/k8s-nsg-module) and [k8s-nsg-module](https://github.com/walmartdigital/k8s-nsg-module) to configure and use a Load Balancer and Network Security Group 100% compatible with this module
