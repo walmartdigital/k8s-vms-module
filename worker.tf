@@ -3,7 +3,6 @@ resource "azurerm_network_interface" "worker" {
   name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   location                  = "${data.azurerm_resource_group.main.location}"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
-  network_security_group_id = "${var.network_security_group_id}"
   enable_ip_forwarding      = true
 
   ip_configuration {
@@ -17,7 +16,6 @@ resource "azurerm_network_interface_backend_address_pool_association" "worker" {
   count                   = "${var.worker_count}"
   network_interface_id    = "${element(azurerm_network_interface.worker.*.id, count.index)}"
   ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
-  backend_address_pool_id = "${var.lb_address_pool_id}"
 }
 
 resource "azurerm_virtual_machine" "worker" {

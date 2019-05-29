@@ -65,14 +65,6 @@ variable "manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "lb_address_pool_id" {
-  type = "string"
-}
-
-variable "network_security_group_id" {
-  type = "string"
-}
-
 variable "add_bastion" {
   type    = "string"
   default = "yes"
