@@ -44,7 +44,8 @@ module "az_vms" {
 
 ## Outputs
 
-* **bastion_ip**: The bastion public IP address.
+* **bastion_public_ip**: The bastion public IP address.
+* **bastion_private_ip**: The bastion private IP address.
 * **worker_ips**: The private IPs of the created worker VMs.
 * **manager_ips**: The private IPs of the created manager VMs.
 
