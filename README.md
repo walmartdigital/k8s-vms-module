@@ -27,26 +27,28 @@ module "az_vms" {
 
 ## Arguments
 
-* **main_resource_group**: A string representing the resource group where all resources will be provisioned, this resource group needs to be previously created (required).
-* **environment**: A string used as environment where the cluster is deployed (required).
-* **name_suffix**: A string used as name suffix (required).
-* **cluster_name**: A string used as the cluster name (required).
-* **vnet_name**: A string representing the resource group virtual network (required).
-* **subnet_name**: A string representing the subnet associated to virtual network (required).
-* **images_resource_group**: A string representing the resource group where to find the custom images (required).
-* **k8s_image_name**: A string used as custom k8s image name (required).
-* **bastion_image_name**: A string used as custom bastion image name (required).
-* **ssh_public_key**: A string used as the public ssh key for connect to bastion (required).
-* **worker_count**: A string used as number of workers (default: 3).
-* **network_security_group_id**: A string used as network security group ID.
-* **lb_address_pool_id**: A string used as load balancer address pool ID.
-* **default_tags**: Tags assigned to every resource that support it (type: map).
+- **main_resource_group**: A string representing the resource group where all resources will be provisioned, this resource group needs to be previously created (required).
+- **environment**: A string used as environment where the cluster is deployed (required).
+- **name_suffix**: A string used as name suffix (required).
+- **cluster_name**: A string used as the cluster name (required).
+- **vnet_name**: A string representing the resource group virtual network (required).
+- **subnet_name**: A string representing the subnet associated to virtual network (required).
+- **images_resource_group**: A string representing the resource group where to find the custom images (required).
+- **k8s_image_name**: A string used as custom k8s image name (required).
+- **bastion_image_name**: A string used as custom bastion image name (required).
+- **ssh_public_key**: A string used as the public ssh key for connect to bastion (required).
+- **worker_count**: A string used as number of workers (default: 3).
+- **network_security_group_id**: A string used as network security group ID.
+- **lb_address_pool_id**: A string used as load balancer address pool ID.
+- **default_tags**: Tags assigned to every resource that support it (type: map).
+- **worker_vm_size**: A string used to assign a custom azure vm size configuration fro workers.
+- **manager_vm_size**: A string used to assign a custom azure vm size configuration fro managers.
 
 ## Outputs
 
-* **bastion_public_ip**: The bastion public IP address.
-* **bastion_private_ip**: The bastion private IP address.
-* **worker_ips**: The private IPs of the created worker VMs.
-* **manager_ips**: The private IPs of the created manager VMs.
+- **bastion_public_ip**: The bastion public IP address.
+- **bastion_private_ip**: The bastion private IP address.
+- **worker_ips**: The private IPs of the created worker VMs.
+- **manager_ips**: The private IPs of the created manager VMs.
 
 > You can use our [k8s-lb-module](https://github.com/walmartdigital/k8s-nsg-module) and [k8s-nsg-module](https://github.com/walmartdigital/k8s-nsg-module) to configure and use a Load Balancer and Network Security Group 100% compatible with this module
