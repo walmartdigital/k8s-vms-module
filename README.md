@@ -7,7 +7,7 @@ RKE (Rancher Kubernetes Engine).
 
 ```bash
 module "az_vms" {
-  source = "git::https://github.com/walmartdigital/k8s-vms-module.git?ref=0.1.0"
+  source = "git::https://github.com/walmartdigital/k8s-vms-module.git?ref=0.2.2"
 
   name_suffix               = "abc123"
   cluster_name              = "my-cluster"
@@ -22,6 +22,8 @@ module "az_vms" {
   worker_count              = "2"
   network_security_group_id = "network-security-group-id"
   lb_address_pool_id        = "loadbalancer-address-pool-id"
+  worker_vm_size            = "my-worker-vm-size"
+  manager_vm_size           = "my-manager-vm-size"
 }
 ```
 
@@ -41,8 +43,8 @@ module "az_vms" {
 - **network_security_group_id**: A string used as network security group ID.
 - **lb_address_pool_id**: A string used as load balancer address pool ID.
 - **default_tags**: Tags assigned to every resource that support it (type: map).
-- **worker_vm_size**: A string used to assign a custom azure vm size configuration fro workers.
-- **manager_vm_size**: A string used to assign a custom azure vm size configuration fro managers.
+- **worker_vm_size**: A string used to assign a custom azure vm size configuration for workers.
+- **manager_vm_size**: A string used to assign a custom azure vm size configuration for managers.
 
 ## Outputs
 

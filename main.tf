@@ -1,5 +1,13 @@
-resource "azurerm_availability_set" "nodes" {
-  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-nodes"
+resource "azurerm_availability_set" "managers" {
+  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-managers"
+  location                    = "${data.azurerm_resource_group.main.location}"
+  resource_group_name         = "${data.azurerm_resource_group.main.name}"
+  managed                     = true
+  platform_fault_domain_count = 2
+}
+
+resource "azurerm_availability_set" "workers" {
+  name                        = "${var.cluster_name}-${var.environment}-${var.name_suffix}-workers"
   location                    = "${data.azurerm_resource_group.main.location}"
   resource_group_name         = "${data.azurerm_resource_group.main.name}"
   managed                     = true
