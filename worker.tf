@@ -24,7 +24,7 @@ resource "azurerm_virtual_machine" "worker" {
   count                            = "${var.worker_count}"
   name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
   location                         = "${data.azurerm_resource_group.main.location}"
-  availability_set_id              = "${azurerm_availability_set.nodes.id}"
+  availability_set_id              = "${azurerm_availability_set.workers.id}"
   resource_group_name              = "${data.azurerm_resource_group.main.name}"
   network_interface_ids            = ["${element(azurerm_network_interface.worker.*.id, count.index)}"]
   vm_size                          = "${var.worker_vm_size}"
