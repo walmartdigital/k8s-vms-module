@@ -1,4 +1,4 @@
-# Terraform files
+# Hashicorp files
 .terraform
 packer.log
 

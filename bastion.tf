@@ -1,20 +1,20 @@
 resource "azurerm_public_ip" "bastion" {
-  count               = "${var.add_bastion == "yes" ? "1" : "0"}"
+  count               = var.add_bastion == "yes" ? "1" : "0"
   name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
-  location            = "${data.azurerm_resource_group.main.location}"
-  resource_group_name = "${data.azurerm_resource_group.main.name}"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_security_group" "bastion" {
-  count               = "${var.add_bastion == "yes" ? "1" : "0"}"
+  count               = var.add_bastion == "yes" ? "1" : "0"
   name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
-  location            = "${data.azurerm_resource_group.main.location}"
-  resource_group_name = "${data.azurerm_resource_group.main.name}"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 }
 
 resource "azurerm_network_security_rule" "ssh" {
-  count                       = "${var.add_bastion == "yes" ? "1" : "0"}"
+  count                       = var.add_bastion == "yes" ? "1" : "0"
   name                        = "ssh"
   priority                    = 150
   direction                   = "Inbound"
@@ -24,37 +24,37 @@ resource "azurerm_network_security_rule" "ssh" {
   destination_port_range      = "22"
   source_address_prefix       = "Internet"
   destination_address_prefix  = "VirtualNetwork"
-  resource_group_name         = "${data.azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.bastion.name}"
+  resource_group_name         = data.azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.bastion[0].name
 }
 
 resource "azurerm_network_interface" "bastion" {
-  count                     = "${var.add_bastion == "yes" ? "1" : "0"}"
+  count                     = var.add_bastion == "yes" ? "1" : "0"
   name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
-  location                  = "${data.azurerm_resource_group.main.location}"
-  resource_group_name       = "${data.azurerm_resource_group.main.name}"
-  network_security_group_id = "${azurerm_network_security_group.bastion.id}"
+  location                  = data.azurerm_resource_group.main.location
+  resource_group_name       = data.azurerm_resource_group.main.name
+  network_security_group_id = azurerm_network_security_group.bastion[0].id
 
   ip_configuration {
     name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
-    subnet_id                     = "${data.azurerm_subnet.subnet.id}"
+    subnet_id                     = data.azurerm_subnet.subnet.id
     private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.bastion.id}"
+    public_ip_address_id          = azurerm_public_ip.bastion[0].id
   }
 }
 
 resource "azurerm_virtual_machine" "bastion" {
-  count                            = "${var.add_bastion == "yes" ? "1" : "0"}"
+  count                            = var.add_bastion == "yes" ? "1" : "0"
   name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-bastion"
-  location                         = "${data.azurerm_resource_group.main.location}"
-  resource_group_name              = "${data.azurerm_resource_group.main.name}"
-  network_interface_ids            = ["${azurerm_network_interface.bastion.id}"]
+  location                         = data.azurerm_resource_group.main.location
+  resource_group_name              = data.azurerm_resource_group.main.name
+  network_interface_ids            = [azurerm_network_interface.bastion[0].id]
   vm_size                          = "Standard_DS1_v2"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
   storage_image_reference {
-    id = "${data.azurerm_image.bastion.id}"
+    id = data.azurerm_image.bastion.id
   }
 
   storage_os_disk {
@@ -73,15 +73,18 @@ resource "azurerm_virtual_machine" "bastion" {
   os_profile_linux_config {
     disable_password_authentication = true
 
-    ssh_keys = {
+    ssh_keys {
       path     = "/home/ubuntu/.ssh/authorized_keys"
-      key_data = "${var.ssh_public_key}"
+      key_data = var.ssh_public_key
     }
   }
 
-  tags = "${merge(var.default_tags, map(
-    "environmentinfo", "T:Prod; N:${var.cluster_name}-${var.environment}-${var.name_suffix}",
-    "cluster", "${var.cluster_name}-${var.environment}-${var.name_suffix}",
-    "role", "bastion"
-    ))}"
+  tags = merge(
+    var.default_tags,
+    {
+      "environmentinfo" = "T:Prod; N:${var.cluster_name}-${var.environment}-${var.name_suffix}"
+      "cluster"         = "${var.cluster_name}-${var.environment}-${var.name_suffix}"
+      "role"            = "bastion"
+    },
+  )
 }
