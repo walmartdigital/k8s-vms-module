@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine" "worker" {
   tags = merge(
     var.default_tags,
     {
-      "environmentinfo" = "T:Prod; N:${var.cluster_name}-${var.environment}-${var.name_suffix}"
+      "environmentinfo" = "T:Prod; N:Prod"
       "cluster"         = "${var.cluster_name}-${var.environment}-${var.name_suffix}"
       "role"            = "worker"
     },
