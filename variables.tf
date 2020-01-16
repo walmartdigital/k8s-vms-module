@@ -55,6 +55,11 @@ variable "worker_count" {
   default = "3"
 }
 
+variable "manager_count" {
+  type    = string
+  default = "3"
+}
+
 variable "worker_vm_size" {
   type    = string
   default = "Standard_DS4_v2"
@@ -65,12 +70,25 @@ variable "manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "lb_address_pool_id" {
+variable "worker_lb_address_pool_id" {
   type = string
 }
 
-variable "network_security_group_id" {
+variable "worker_network_security_group_id" {
   type = string
+}
+
+variable "manager_lb_address_pool_id" {
+  type = string
+}
+
+variable "manager_network_security_group_id" {
+  type = string
+}
+
+variable "add_managers" {
+  type    = string
+  default = "yes"
 }
 
 variable "add_bastion" {

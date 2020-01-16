@@ -1,15 +1,9 @@
-resource "azurerm_network_security_group" "managers" {
-  name                = "${var.cluster_name}-${var.environment}-${var.name_suffix}-manager"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-}
-
 resource "azurerm_network_interface" "manager" {
-  count                     = 3
+  count                     = var.add_managers == "yes" ? var.manager_count : "0"
   name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
   location                  = data.azurerm_resource_group.main.location
   resource_group_name       = data.azurerm_resource_group.main.name
-  network_security_group_id = azurerm_network_security_group.managers.id
+  network_security_group_id = var.manager_network_security_group_id
 
   ip_configuration {
     name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
@@ -18,8 +12,15 @@ resource "azurerm_network_interface" "manager" {
   }
 }
 
+resource "azurerm_network_interface_backend_address_pool_association" "manager" {
+  count                   = var.add_managers == "yes" ? var.manager_count : "0"
+  network_interface_id    = element(azurerm_network_interface.manager.*.id, count.index)
+  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
+  backend_address_pool_id = var.manager_lb_address_pool_id
+}
+
 resource "azurerm_virtual_machine" "manager" {
-  count                            = 3
+  count                            = var.add_managers == "yes" ? var.manager_count : "0"
   name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
   location                         = data.azurerm_resource_group.main.location
   availability_set_id              = azurerm_availability_set.managers.id

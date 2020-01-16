@@ -39,12 +39,15 @@ module "az_vms" {
 - **k8s_image_name**: A string used as custom k8s image name (required).
 - **bastion_image_name**: A string used as custom bastion image name (required).
 - **ssh_public_key**: A string used as the public ssh key for connect to bastion (required).
+- **managert_count**: A string used as number of managers (default: 3).
 - **worker_count**: A string used as number of workers (default: 3).
 - **network_security_group_id**: A string used as network security group ID.
 - **lb_address_pool_id**: A string used as load balancer address pool ID.
 - **default_tags**: Tags assigned to every resource that support it (type: map).
 - **worker_vm_size**: A string used to assign a custom azure vm size configuration for workers.
 - **manager_vm_size**: A string used to assign a custom azure vm size configuration for managers.
+- **create_bastion**: "no" if you don't want to create bastion (default: "yes").
+- **create_managers**: "no" if you don't want to create managers (default: "yes").
 
 ## Outputs
 
