@@ -12,13 +12,6 @@ resource "azurerm_network_interface" "manager" {
   }
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "manager" {
-  count                   = var.add_managers == "yes" ? var.manager_count : "0"
-  network_interface_id    = element(azurerm_network_interface.manager.*.id, count.index)
-  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
-  backend_address_pool_id = var.manager_lb_address_pool_id
-}
-
 resource "azurerm_virtual_machine" "manager" {
   count                            = var.add_managers == "yes" ? var.manager_count : "0"
   name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
