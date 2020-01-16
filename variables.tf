@@ -55,6 +55,11 @@ variable "worker_count" {
   default = "3"
 }
 
+variable "worker_name" {
+  type    = string
+  default = "worker"
+}
+
 variable "manager_count" {
   type    = string
   default = "3"

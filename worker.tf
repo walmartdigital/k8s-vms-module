@@ -1,13 +1,13 @@
 resource "azurerm_network_interface" "worker" {
   count                     = var.worker_count
-  name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+  name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
   location                  = data.azurerm_resource_group.main.location
   resource_group_name       = data.azurerm_resource_group.main.name
   network_security_group_id = var.worker_network_security_group_id
   enable_ip_forwarding      = true
 
   ip_configuration {
-    name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+    name                          = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
     subnet_id                     = data.azurerm_subnet.subnet.id
     private_ip_address_allocation = "dynamic"
   }
@@ -16,13 +16,13 @@ resource "azurerm_network_interface" "worker" {
 resource "azurerm_network_interface_backend_address_pool_association" "worker" {
   count                   = var.worker_count
   network_interface_id    = element(azurerm_network_interface.worker.*.id, count.index)
-  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
   backend_address_pool_id = var.worker_lb_address_pool_id
 }
 
 resource "azurerm_virtual_machine" "worker" {
   count                            = var.worker_count
-  name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+  name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
   location                         = data.azurerm_resource_group.main.location
   availability_set_id              = azurerm_availability_set.workers.id
   resource_group_name              = data.azurerm_resource_group.main.name
@@ -36,14 +36,14 @@ resource "azurerm_virtual_machine" "worker" {
   }
 
   storage_os_disk {
-    name              = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+    name              = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
+    computer_name  = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${var.worker_name}-${count.index + 1)}"
     admin_username = "ubuntu"
     admin_password = "ef208a6b-a6b0-47f0-be8f-2d2bd2e640ba"
   }
