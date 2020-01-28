@@ -79,6 +79,11 @@ variable "worker_lb_address_pool_id" {
   type = string
 }
 
+variable "manager_lb_address_pool_id" {
+  type = string
+  default = ""
+}
+
 variable "worker_network_security_group_id" {
   type = string
 }
