@@ -101,3 +101,8 @@ variable "add_bastion" {
   type    = string
   default = "yes"
 }
+
+variable "add_manager_lb" {
+  type    = string
+  default = "no"
+}
