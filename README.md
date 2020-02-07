@@ -23,6 +23,7 @@ module "az_vms" {
   network_security_group_id = "network-security-group-id"
   lb_address_pool_id        = "loadbalancer-address-pool-id"
   worker_vm_size            = "my-worker-vm-size"
+  worker_disk_size_gb       = "my-worker-disk-size_gb"
   manager_vm_size           = "my-manager-vm-size"
 }
 ```
@@ -44,6 +45,7 @@ module "az_vms" {
 - **lb_address_pool_id**: A string used as load balancer address pool ID.
 - **default_tags**: Tags assigned to every resource that support it (type: map).
 - **worker_vm_size**: A string used to assign a custom azure vm size configuration for workers.
+- **worker_disk_size_gb**: A string used to assign a custom azure disk size configuration for workers (default: 30gb).
 - **manager_vm_size**: A string used to assign a custom azure vm size configuration for managers.
 
 ## Outputs

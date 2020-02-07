@@ -39,6 +39,7 @@ resource "azurerm_virtual_machine" "worker" {
     name              = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("worker%d", count.index + 1)}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
+    disk_size_gb      = "${var.worker_disk_size_gb}"
     managed_disk_type = "Standard_LRS"
   }
 
