@@ -70,6 +70,11 @@ variable "worker_vm_size" {
   default = "Standard_DS4_v2"
 }
 
+variable "worker_disk_size" {
+  type    = number
+  default = 30
+}
+
 variable "manager_vm_size" {
   type    = string
   default = "Standard_DS2_v2"
