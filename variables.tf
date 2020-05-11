@@ -75,7 +75,11 @@ variable "manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
-variable "worker_lb_address_pool_id" {
+variable "worker_lb_address_pool_id_public" {
+  type = string
+}
+
+variable "worker_lb_address_pool_id_private" {
   type = string
 }
 

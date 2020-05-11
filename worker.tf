@@ -13,11 +13,18 @@ resource "azurerm_network_interface" "worker" {
   }
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "worker" {
+resource "azurerm_network_interface_backend_address_pool_association" "worker_public" {
   count                   = var.worker_count
   network_interface_id    = element(azurerm_network_interface.worker.*.id, count.index)
   ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("${var.worker_name}%d", count.index + 1)}"
-  backend_address_pool_id = var.worker_lb_address_pool_id
+  backend_address_pool_id = var.worker_lb_address_pool_id_public
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "worker_private" {
+  count                   = var.worker_count
+  network_interface_id    = element(azurerm_network_interface.worker.*.id, count.index)
+  ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("${var.worker_name}%d", count.index + 1)}"
+  backend_address_pool_id = var.worker_lb_address_pool_id_private
 }
 
 resource "azurerm_virtual_machine" "worker" {
