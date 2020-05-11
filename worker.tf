@@ -19,7 +19,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "worker_pu
   ip_configuration_name   = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("${var.worker_name}%d", count.index + 1)}"
   backend_address_pool_id = var.worker_lb_address_pool_id_public
 }
-
+network_security_group_id
 resource "azurerm_network_interface_backend_address_pool_association" "worker_private" {
   count                   = var.worker_count
   network_interface_id    = element(azurerm_network_interface.worker.*.id, count.index)

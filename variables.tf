@@ -34,6 +34,7 @@ variable "k8s_image_name" {
 
 variable "bastion_image_name" {
   type = string
+  default = ""
 }
 
 variable "ssh_public_key" {
