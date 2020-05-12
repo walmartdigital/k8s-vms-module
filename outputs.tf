@@ -13,4 +13,3 @@ output "worker_ips" {
 output "manager_ips" {
   value = join(",", azurerm_network_interface.manager.*.private_ip_address)
 }
-
