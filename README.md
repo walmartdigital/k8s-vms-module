@@ -17,11 +17,12 @@ module "az_vms" {
   subnet_name               = "my-subnet-name"
   images_resource_group     = "my-images-resource-group"
   k8s_image_name            = "k8s-v1.0.0"
-  bastion_image_name        = "bastion-v1.0.0"
-  ssh_public_key            = "abc123"
-  worker_count              = "2"
-  network_security_group_id = "network-security-group-id"
-  lb_address_pool_id        = "loadbalancer-address-pool-id"
+  bastion_image_name                       = "bastion-v1.0.0"
+  ssh_public_key                           = "abc123"
+  worker_count                             = "2"
+  worker_network_security_group_id         = "network-security-group-id"
+  worker_lb_address_pool_id_private        = "loadbalancer-address-pool-id_private"
+  worker_lb_address_pool_id_public         = "loadbalancer-address-pool-id_public"
   worker_vm_size            = "my-worker-vm-size"
   manager_vm_size           = "my-manager-vm-size"
 }
@@ -42,7 +43,8 @@ module "az_vms" {
 - **managert_count**: A string used as number of managers (default: 3).
 - **worker_count**: A string used as number of workers (default: 3).
 - **network_security_group_id**: A string used as network security group ID.
-- **lb_address_pool_id**: A string used as load balancer address pool ID.
+- **worker_lb_address_pool_id_public**: A string used as load balancer public address pool ID.
+- **worker_lb_address_pool_id_private**: A string used as load balancer private address pool ID.
 - **default_tags**: Tags assigned to every resource that support it (type: map).
 - **worker_vm_size**: A string used to assign a custom azure vm size configuration for workers.
 - **manager_vm_size**: A string used to assign a custom azure vm size configuration for managers.
