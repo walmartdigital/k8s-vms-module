@@ -14,7 +14,7 @@ resource "azurerm_network_security_group" "bastion" {
 }
 
 resource "azurerm_network_security_rule" "ssh" {
-  count                       = var.add_bastion == "yes" ? "1" : "0"
+  count                       = var.add_bastion == "yes" ? var.block_bastion_ssh == "yes" ? "1" : "0" : "0"
   name                        = "ssh"
   priority                    = 150
   direction                   = "Inbound"
@@ -23,6 +23,21 @@ resource "azurerm_network_security_rule" "ssh" {
   source_port_range           = "*"
   destination_port_range      = "22"
   source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = data.azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.bastion[0].name
+}
+
+resource "azurerm_network_security_rule" "ssh_allowed_ips" {
+  count                       = var.add_bastion == "yes" ? var.block_bastion_ssh == "yes" ? "0" : var.bastion_ssh_allowed_ips : "0"
+  name                        = "ssh"
+  priority                    = 150
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = var.bastion_ssh_allowed_ips[count.index]
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = data.azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.bastion[0].name
