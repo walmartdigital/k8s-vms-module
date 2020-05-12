@@ -28,6 +28,15 @@ module "az_vms" {
 }
 ```
 
+By default all ssh access to to Bastion is blocked. If its needed allow access trough internet, must be used a white list of allowed ips:
+
+```yaml
+block_bastion_ssh                       = "no"
+bastion_ssh_allowed_ips                 = ["10.0.0.1", "AzureCloud"]
+```
+
+Take on consideration that can be used Azure wildcards like **AzureCloud** (allow access to any azure public cloud).
+
 ## Arguments
 
 - **main_resource_group**: A string representing the resource group where all resources will be provisioned, this resource group needs to be previously created (required).

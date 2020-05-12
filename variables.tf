@@ -107,6 +107,16 @@ variable "add_bastion" {
   default = "yes"
 }
 
+variable "block_bastion_ssh" {
+  type    = string
+  default = "yes"
+}
+
+variable "bastion_ssh_allowed_ips" {
+  type    = list(string)
+  default = []
+}
+
 variable "add_manager_lb" {
   type    = string
   default = "no"
