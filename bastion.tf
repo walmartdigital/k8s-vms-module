@@ -31,7 +31,7 @@ resource "azurerm_network_security_rule" "ssh" {
 resource "azurerm_network_security_rule" "ssh_allowed_ips" {
   count                       = var.add_bastion == "yes" ? var.block_bastion_ssh == "yes" ? "0" : length(var.bastion_ssh_allowed_ips) : "0"
   name                        = "ssh${count.index}"
-  priority                    = 150
+  priority                    = 150+count.index
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
