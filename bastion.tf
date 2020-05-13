@@ -30,12 +30,12 @@ resource "azurerm_network_security_rule" "ssh" {
 
 resource "azurerm_network_security_rule" "ssh_allowed_ips" {
   count                       = var.add_bastion == "yes" ? var.block_bastion_ssh == "yes" ? "0" : length(var.bastion_ssh_allowed_ips) : "0"
-  name                        = "ssh"
-  priority                    = 150 + count.index
+  name                        = "ssh${count.index}"
+  priority                    = 150
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
-  source_port_range           = "*"
+  source_port_range           = "*"y
   destination_port_range      = "22"
   source_address_prefix       = var.bastion_ssh_allowed_ips[count.index]
   destination_address_prefix  = "VirtualNetwork"
