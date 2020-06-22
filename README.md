@@ -9,22 +9,25 @@ RKE (Rancher Kubernetes Engine).
 module "az_vms" {
   source = "git::https://github.com/walmartdigital/k8s-vms-module.git?ref=0.2.2"
 
-  name_suffix               = "abc123"
-  cluster_name              = "my-cluster"
-  environment               = "staging"
-  main_resource_group       = "my-resource-group"
-  vnet_name                 = "my-vnet-name"
-  subnet_name               = "my-subnet-name"
-  images_resource_group     = "my-images-resource-group"
-  k8s_image_name            = "k8s-v1.0.0"
-  bastion_image_name                       = "bastion-v1.0.0"
-  ssh_public_key                           = "abc123"
-  worker_count                             = "2"
-  worker_network_security_group_id         = "network-security-group-id"
-  worker_lb_address_pool_id_private        = "loadbalancer-address-pool-id_private"
-  worker_lb_address_pool_id_public         = "loadbalancer-address-pool-id_public"
-  worker_vm_size            = "my-worker-vm-size"
-  manager_vm_size           = "my-manager-vm-size"
+  name_suffix                         = "abc123"
+  cluster_name                        = "my-cluster"
+  environment                         = "staging"
+  main_resource_group                 = "my-resource-group"
+  vnet_name                           = "my-vnet-name"
+  subnet_name                         = "my-subnet-name"
+  images_resource_group               = "my-images-resource-group"
+  k8s_image_name                      = "k8s-v1.0.0"
+  bastion_image_name                  = "bastion-v1.0.0"
+  ssh_public_key                      = "abc123"
+  worker_count                        = "2"
+  worker_network_security_group_id    = "network-security-group-id"
+  worker_lb_address_pool_id_private   = "loadbalancer-address-pool-id_private"
+  worker_lb_address_pool_id_public    = "loadbalancer-address-pool-id_public"
+  worker_vm_size                      = "my-worker-vm-size"
+  manager_vm_size                     = "my-manager-vm-size"
+  worker_count                        = "my-worker-quantity"
+  bastion_disk_size                    = "my-worker-disk-size"
+  worker_disk_size                    = "my-worker-disk-size"
 }
 ```
 
@@ -59,6 +62,8 @@ Take on consideration that can be used Azure wildcards like **AzureCloud** (allo
 - **manager_vm_size**: A string used to assign a custom azure vm size configuration for managers.
 - **create_bastion**: "no" if you don't want to create bastion (default: "yes").
 - **create_managers**: "no" if you don't want to create managers (default: "yes").
+- **bastion_disk_size**: A string used to assign a custom azure disk size configuration for bastion (default: 30gb).
+- **worker_disk_size**: A string used to assign a custom azure disk size configuration for workers (default: 30gb).
 
 ## Outputs
 
