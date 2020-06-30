@@ -51,6 +51,11 @@ variable "default_tags" {
   }
 }
 
+variable use_public_lb {
+  type    = bool
+  default = true
+}
+
 variable "worker_count" {
   type    = string
   default = "3"
