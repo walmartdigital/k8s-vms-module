@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support new var use_public_lb
 
+## [0.5.2] - 2020-06-22
+### Added
+- Add bastion and worker disk size with default values
+
 ## [0.5.1] - 2020-05-12
 ### Added
 

@@ -81,6 +81,16 @@ variable "manager_vm_size" {
   default = "Standard_DS2_v2"
 }
 
+variable "bastion_disk_size" {
+  type    = number
+  default = 30
+}
+
+variable "worker_disk_size" {
+  type    = number
+  default = 30
+}
+
 variable "worker_lb_address_pool_id_public" {
   type = string
 }

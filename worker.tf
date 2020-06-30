@@ -51,6 +51,7 @@ resource "azurerm_virtual_machine" "worker" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
+    disk_size_gb      = var.worker_disk_size
   }
 
   os_profile {
