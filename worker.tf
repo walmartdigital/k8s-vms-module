@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "worker" {
 }
 
 locals {
-  public_worker_count = use_public_lb ? var.worker_count : 0
+  public_worker_count = var.use_public_lb ? var.worker_count : 0
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "worker_public" {
