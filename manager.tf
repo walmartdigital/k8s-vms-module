@@ -5,7 +5,7 @@ resource "azurerm_network_security_group" "managers" {
 }
 
 resource "azurerm_network_interface" "manager" {
-  count                     = 3
+  count                     = 2
   name                      = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
   location                  = "${data.azurerm_resource_group.main.location}"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
@@ -19,7 +19,7 @@ resource "azurerm_network_interface" "manager" {
 }
 
 resource "azurerm_virtual_machine" "manager" {
-  count                            = 3
+  count                            = 2
   name                             = "${var.cluster_name}-${var.environment}-${var.name_suffix}-${format("manager%d", count.index + 1)}"
   location                         = "${data.azurerm_resource_group.main.location}"
   availability_set_id              = "${azurerm_availability_set.nodes.id}"
@@ -38,6 +38,7 @@ resource "azurerm_virtual_machine" "manager" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
+    disk_size_gb      = "${var.manager_disk_size}"
   }
 
   os_profile {

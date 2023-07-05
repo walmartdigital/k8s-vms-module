@@ -77,3 +77,15 @@ variable "add_bastion" {
   type    = "string"
   default = "yes"
 }
+
+variable "worker_disk_size" {
+  type    = "string"
+  default = "100"
+}
+
+
+variable "manager_disk_size" {
+  type    = "string"
+  default = "100"
+}
+
